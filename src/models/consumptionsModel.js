@@ -1,8 +1,11 @@
-const connection = require('./connection');
+const connection = require('./postgres');
 
 const getAll = async () => {
-    console.log('chamou o GET')
-    const resultSet = await connection.execute('SELECT * FROM consumption');
+    console.log('chamou o GET ALL')
+    //const resultSet = await connection.execute('SELECT * FROM consumption');
+
+    const resultSet =  await connection`SELECT * FROM consumption`
+   
     return resultSet;
 };
 
