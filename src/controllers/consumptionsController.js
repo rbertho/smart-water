@@ -1,17 +1,17 @@
 const consumptionsModel = require('../models/consumptionsModel');
 
 const getAll = async (req, res) => {
-    const tasks = await consumptionsModel.getAll();
-    console.log('teste: ', tasks)
-    console.log('Registros encontrados: ', tasks[0].length)
-    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(tasks[0]);
+    const rows = await consumptionsModel.getAll();
+    console.log('Response: ', rows)
+    console.log('Registros encontrados: ', rows.length)
+    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(rows);
 };
 
 const getFiltered = async (req, res) => {
-    const tasks = await consumptionsModel.getFiltered(req);
+    const rows = await consumptionsModel.getFiltered(req);
 
-    console.log('Registros encontrados: ', tasks[0].length)
-    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(tasks[0]);
+    console.log('Registros encontrados: ', rows[0].length)
+    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(rows[0]);
 };
 
 const addConsumption = async (req, res) => {
