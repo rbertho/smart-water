@@ -1,22 +1,24 @@
 const consumptionsModel = require('../models/consumptionsModel');
 
 const getAll = async (req, res) => {
-    const rows = await consumptionsModel.getAll();
-    console.log('Response: ', rows)
-    console.log('Registros encontrados: ', rows.length)
-    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(rows);
+    const result = await consumptionsModel.getAll();
+    console.log('Response: ', result.rows)
+    console.log('Registros encontrados: ', result.rows.length)
+    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(result.rows);
 };
 
 const getFiltered = async (req, res) => {
-    const rows = await consumptionsModel.getFiltered(req);
+    const result = await consumptionsModel.getFiltered(req);
 
-    console.log('Registros encontrados: ', rows[0].length)
-    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(rows[0]);
+    console.log('Registros encontrados: ', result.rows.length)
+    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(result.rows);
 };
 
 const addConsumption = async (req, res) => {
     const addConsumption = await consumptionsModel.addConsumption(req.body);
-    return res.status(201).json(addConsumption)
+    const {rowCount} = addConsumption;
+    console.log('Registros afetados: ', rowCount)
+    return res.status(201).json('[]')
 };
 
 module.exports = {

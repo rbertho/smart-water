@@ -1,19 +1,16 @@
-const connection = require('./postgres');
+const pool = require('./postgres');
 
 const getAll = async () => {
     console.log('chamou o GET ALL')
-    //const resultSet = await connection.execute('SELECT * FROM consumption');
-
-    const resultSet =  await connection`SELECT * FROM consumption`
-   
+    const resultSet = await pool.query(`SELECT * FROM consumption`);
     return resultSet;
 };
 
 const getFiltered = async (req) => {
     const id = req.query.id_device
     console.log('chamou o GET FILTERED: id_device:', id)
-    const resultSet = await connection.execute('SELECT * FROM consumption WHERE id_device = ?', [id]);
-    return resultSet;
+    const result = await pool.query(`SELECT * FROM consumption WHERE id_device = $1`, [id]);
+    return result
 };
 
 const addConsumption = async (consump) => {
@@ -24,11 +21,9 @@ const addConsumption = async (consump) => {
     const {user} = consump;
 
     //const dateUTC = new Date(Date.now())
-    const query = 'INSERT INTO consumption(id_device, consumption_amount, id_user) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO consumption(id_device, consumption_amount, id_user, create_time) VALUES ($1, $2, $3, current_timestamp)';
 
-    const [addConsumption] = await connection.execute(query, [id_device, consumption_amount, user]);
-
-    return {insertId: addConsumption.insertId};
+    return await pool.query(query, [id_device, consumption_amount, user]);
 }
 
 
