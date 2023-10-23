@@ -18,12 +18,10 @@ const addConsumption = async (consump) => {
     console.log(consump)
     const {id_device} = consump;
     const {consumption_amount} = consump;
-    const {user} = consump;
 
     //const dateUTC = new Date(Date.now())
-    const query = 'INSERT INTO consumption(id_device, consumption_amount, id_user, create_time) VALUES ($1, $2, $3, current_timestamp)';
-
-    return await pool.query(query, [id_device, consumption_amount, user]);
+    const query = 'INSERT INTO consumption(id_device, consumption_amount, create_time) VALUES ($1, $2, current_timestamp)';
+    return await pool.query(query, [id_device, consumption_amount]);
 }
 
 
