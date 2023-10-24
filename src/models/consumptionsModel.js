@@ -2,14 +2,14 @@ const pool = require('./postgres');
 
 const getAll = async () => {
     console.log('chamou o GET ALL')
-    const resultSet = await pool.query(`SELECT * FROM consumption`);
+    const resultSet = await pool.query(`SELECT * FROM consumption ORDER BY create_time`);
     return resultSet;
 };
 
 const getFiltered = async (req) => {
     const id = req.query.id_device
     console.log('chamou o GET FILTERED: id_device:', id)
-    const result = await pool.query(`SELECT * FROM consumption WHERE id_device = $1`, [id]);
+    const result = await pool.query(`SELECT * FROM consumption WHERE id_device = $1 ORDER BY create_time`, [id]);
     return result
 };
 
