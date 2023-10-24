@@ -8,5 +8,6 @@ const comsumptionsMiddleware = require('./middlewares/consumptionsMiddleware')
 router.get('/consumptionsByDevice', consumptionsController.getFiltered);
 router.get('/consumptions', consumptionsController.getAll);
 router.post('/consumptions', comsumptionsMiddleware.validateBody, consumptionsController.addConsumption);
+router.get('/renter', consumptionsController.getRenterDetails);
 
 module.exports = router;

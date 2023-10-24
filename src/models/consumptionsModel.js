@@ -13,6 +13,17 @@ const getFiltered = async (req) => {
     return result
 };
 
+const getRenterDetails = async (req) => {
+    const id = req.query.id_device
+    console.log('chamou o GET Renter: id_device:', id)
+    let query = `SELECT name, rent_unit FROM users u WHERE u.id_user in (` +
+        `SELECT d.id_user FROM device d WHERE id_device = $1)`
+    const result = await pool.query(query, [id]);
+    return result
+}
+
+
+
 const addConsumption = async (consump) => {
     console.log('chamou o POST')
     console.log(consump)
@@ -28,5 +39,6 @@ const addConsumption = async (consump) => {
 module.exports = {
     getAll, 
     getFiltered,
+    getRenterDetails,
     addConsumption
 };
