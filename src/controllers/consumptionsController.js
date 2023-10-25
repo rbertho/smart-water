@@ -22,6 +22,7 @@ const getRenterDetails = async (req, res) => {
 };
 
 const addConsumption = async (req, res) => {
+    console.log(req)
     const addConsumption = await consumptionsModel.addConsumption(req.body);
     const {rowCount} = addConsumption;
     console.log('Registros afetados: ', rowCount)
