@@ -14,6 +14,13 @@ const getFiltered = async (req, res) => {
     return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(result.rows);
 };
 
+const getFilteredByMonth = async (req, res) => {
+    const result = await consumptionsModel.getFilteredByMonth(req);
+
+    console.log('Registros encontrados: ', result.rows.length)
+    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(result.rows);
+};
+
 const getRenterDetails = async (req, res) => {
     const result = await consumptionsModel.getRenterDetails(req);
 
@@ -33,5 +40,6 @@ module.exports = {
     getAll,
     getFiltered,
     getRenterDetails,
+    getFilteredByMonth,
     addConsumption
 };

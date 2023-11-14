@@ -13,6 +13,17 @@ const getFiltered = async (req) => {
     return result
 };
 
+const getFilteredByMonth = async (req) => {
+    const id = req.query.id_device
+    console.log('chamou o GET FILTERED: id_device:', id)
+    let query = `SELECT sum(consumption_amount) as consumption_amount, date_trunc('month', create_time) ` +
+                `FROM consumption ` + 
+                `WHERE id_device = $1 ` + 
+                `GROUP BY date_trunc('month', create_time) `;
+    const result = await pool.query(query, [id]);
+    return result
+};
+
 const getRenterDetails = async (req) => {
     const id = req.query.id_device
     console.log('chamou o GET Renter: id_device:', id)
@@ -40,5 +51,6 @@ module.exports = {
     getAll, 
     getFiltered,
     getRenterDetails,
+    getFilteredByMonth,
     addConsumption
 };
