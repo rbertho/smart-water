@@ -9,8 +9,12 @@ const getAll = async () => {
 const getFiltered = async (req) => {
     const id = req.query.id_device
     console.log('chamou o GET FILTERED: id_device:', id)
-    const result = await pool.query(`SELECT * FROM consumption WHERE id_device = $1 ORDER BY create_time`, [id]);
-    return result
+    let query = `SELECT id_consumption, date_trunc('day', create_time) AS create_time, consumption_amount, id_device ` +
+                `FROM consumption ` + 
+                `WHERE id_device = $1 ` +
+                `GROUP BY date_trunc('day', create_time) ` + 
+                `ORDER BY create_time`;	
+    return await pool.query(query, [id]);
 };
 
 const getFilteredByMonth = async (req) => {
