@@ -7,6 +7,12 @@ const getAll = async (req, res) => {
     return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(result.rows);
 };
 
+const getTotalConsumptionByMonth = async (req, res) => {
+    const result = await consumptionsModel.getTotalConsumptionByMonth();
+    console.log('Registros encontrados: ', result.rows.length)
+    return res.status(200).set({'Access-Control-Allow-Origin': '*'}).json(result.rows);
+};
+
 const getFiltered = async (req, res) => {
     const result = await consumptionsModel.getFiltered(req);
     console.log('Registros encontrados: ', result.rows.length)
@@ -36,6 +42,7 @@ const addConsumption = async (req, res) => {
 
 module.exports = {
     getAll,
+    getTotalConsumptionByMonth,
     getFiltered,
     getRenterDetails,
     getFilteredByMonth,

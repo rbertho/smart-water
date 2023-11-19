@@ -6,6 +6,18 @@ const getAll = async () => {
     return resultSet;
 };
 
+const getTotalConsumptionByMonth = async () => {
+    console.log('chamou o GET Total Consumption By Month')
+    let query = `SELECT SUM(C.consumption_amount) AS consumption_amount, ` +
+                `date_trunc('month', C.create_time) AS month, C.id_device as id_device, rent_unit ` +
+                `FROM consumption C, users U, device D ` +
+                `WHERE U.id_user = D.id_user ` +
+                `AND D.id_device = C.id_device ` +
+                `GROUP BY C.id_device, rent_unit, month ` +
+                `ORDER BY month, c.id_device`;
+    return await pool.query(query);
+};
+
 const getFiltered = async (req) => {
     const id = req.query.id_device
     console.log('chamou o GET FILTERED: id_device:', id)
@@ -54,6 +66,7 @@ const addConsumption = async (consump) => {
 
 module.exports = {
     getAll, 
+    getTotalConsumptionByMonth,
     getFiltered,
     getRenterDetails,
     getFilteredByMonth,
