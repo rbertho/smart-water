@@ -52,15 +52,25 @@ const getRenterDetails = async (req) => {
 
 
 
-const addConsumption = async (consump) => {
+const addConsumption = async (req) => {
     console.log('chamou o POST')
-    console.log(consump)
-    const {id_device} = consump;
-    const {consumption_amount} = consump;
+    console.log(req)
 
-    //const dateUTC = new Date(Date.now())
-    const query = 'INSERT INTO consumption(id_device, consumption_amount, create_time) VALUES ($1, $2, current_timestamp)';
-    return await pool.query(query, [id_device, consumption_amount]);
+    let valuesArray = [];
+
+    // iterate over the array of objects req
+    for (let i = 0; i < req.length; i++) {
+        // get the values of each object
+        let values = Object.values(req[i]);
+        // push the values to the array
+        valuesArray.push(values);
+    }
+    console.log(valuesArray);
+
+    var format = require('pg-format');
+
+    let query = 'INSERT INTO consumption(id_device, consumption_amount, create_time) VALUES %L';
+    return await pool.query(format(query, valuesArray))
 }
 
 
