@@ -50,8 +50,6 @@ const getRenterDetails = async (req) => {
     return result
 }
 
-
-
 const addConsumption = async (req) => {
     console.log('chamou o POST')
     console.log(req)
