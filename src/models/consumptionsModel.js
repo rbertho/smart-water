@@ -18,7 +18,7 @@ const getTotalConsumptionByMonth = async () => {
     return await pool.query(query);
 };
 
-const getFiltered = async (req) => {
+const getFiltered = async (req) => { 
     const id = req.query.id_device
     console.log('chamou o GET FILTERED: id_device:', id)
     let query = `SELECT date_trunc('day', create_time) AS create_time, sum(consumption_amount) as consumption_amount, id_device ` +
@@ -56,7 +56,7 @@ const addConsumption = async (req) => {
 
     let valuesArray = [];
 
-    // iterate over the array of objects req
+    // iterate over the array of objects req1
     for (let i = 0; i < req.length; i++) {
         // get the values of each object
         let values = Object.values(req[i]);
