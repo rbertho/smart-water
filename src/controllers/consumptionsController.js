@@ -31,7 +31,7 @@ const getRenterDetails = async (req, res) => {
 };
 
 const addConsumption = async (req, res) => {
-    console.log(req)
+    //console.log(req)
     const result = await consumptionsModel.addConsumption(req.body);
     console.log('Registros afetados: ', result.rowCount)
     return res.status(201).json('[' + result.rowCount + ']');
