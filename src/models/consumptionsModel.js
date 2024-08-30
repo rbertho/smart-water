@@ -51,26 +51,33 @@ const getRenterDetails = async (req) => {
 }
 
 const addConsumption = async (req) => {
-    console.log('chamou o POST')
-    console.log(req)
+    console.log('Received POST request');
+    console.log(req);
 
     let valuesArray = [];
 
-    // iterate over the array of objects req1
+    // Iterate over the array of objects req
     for (let i = 0; i < req.length; i++) {
-        // get the values of each object
+        // Get the values of each object
         let values = Object.values(req[i]);
-        // push the values to the array
+        // Push the values to the array
         valuesArray.push(values);
     }
-    console.log(valuesArray);
+    console.log('Values array:', valuesArray);
 
-    var format = require('pg-format');
+    const format = require('pg-format');
+    const query = 'INSERT INTO consumption(id_device, consumption_amount, create_time) VALUES %L';
 
-    let query = 'INSERT INTO consumption(id_device, consumption_amount, create_time) VALUES %L';
-    return await pool.query(format(query, valuesArray))
+    try {
+        // Attempt to execute the query
+        const result = await pool.query(format(query, valuesArray));
+        return result;
+    } catch (error) {
+        // Log the error and return a meaningful response
+        console.error('Database connection error:', error);
+        throw new Error('Failed to add consumption data. Please try again later.');
+    }
 }
-
 
 module.exports = {
     getAll, 
