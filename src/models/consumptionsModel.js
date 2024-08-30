@@ -51,7 +51,7 @@ const getRenterDetails = async (req) => {
 }
 
 const addConsumption = async (req) => {
-    console.log('Received POST request');
+    console.log('Received POST requests');
     console.log(req);
 
     let valuesArray = [];
